@@ -120,18 +120,16 @@ welcome_group = 2
 @app.on_message(filters.new_chat_members, group=welcome_group)
 async def welcome(client, message: Message):
     try:
-        chat_id = message.chat.id
-        for member in message.new_chat_members:
-            buttons = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text=member.first_name,  
-                            user_id=member.id        
-                        )
-                    ]
-                ]
+        buttons = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(
+                text=member.first_name,
+                url=f"https://t.me/{member.username}" if member.username else f"https://t.me/{member.id}"
             )
+        ]
+    ]
+)
 
             if isinstance(config.OWNER_ID, int): 
                 if member.id == config.OWNER_ID:
